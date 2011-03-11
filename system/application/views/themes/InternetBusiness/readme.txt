@@ -1,0 +1,1 @@
+Untuk menggunakan template "Internat Business", silahkan copy dan ekstrak file "InternetBusiness.rar" ke dalam folder/direktori themes Anda (/system/application/views/themes)
