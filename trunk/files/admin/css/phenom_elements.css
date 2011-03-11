@@ -1,0 +1,436 @@
+/* TOOLBAR */
+.toolbar {
+	float: left;
+	margin: 0px 0px 5px 0px;
+	padding: 0px;
+	font-size: 8pt;
+	font-family: Tahoma, Arial, Helvetica, sans-serif;
+	height: 20px;
+}
+
+.toolbar a {
+	border: #ece9d6 1px solid;
+	height: 14px;
+	padding: 3px 7px;
+	margin: 1px 1px 0px 0px;
+	display: block;
+	float: left;
+	overflow: hidden;
+	cursor: default;
+}
+
+.toolbar a:hover {
+	text-decoration: none;
+	background-image: url('../images/button_bg.gif');
+	background-repeat: repeat-x;
+	background-color: #ffffff; /*#FFF9D6;*/
+	
+	padding: 3px 7px;
+	border: #FCE171 1px solid;
+
+}
+
+.toolbar a:active {
+	text-decoration: none;
+	padding: 3px 5px 1px 7px;
+	border: #ece9d6 2px solid;
+	border-bottom: #fffef5 2px solid;
+	border-right: #fffef5 2px solid;
+}
+
+.toolbar input.inputButton {
+	color: #A0410D;
+	background-color: #ffffff;
+	border: 0px #ece9d6  solid;
+	font-size: 8pt;
+	font-family: Tahoma, Arial, Helvetica, sans-serif;
+	height: 22px;
+	padding: 2px 7px 4px 7px;
+	margin: 1px 1px 0px 0px;
+	display: block;
+	float: left;
+	overflow: hidden;
+}
+
+.toolbar input.inputButton:hover {
+	background-image: url('../images/button_bg.gif');
+	background-repeat: repeat-x;
+	border: #FCE171 1px solid;
+}
+
+.toolbar input.inputButton:active {
+	padding: 2px 5px 0px 7px;
+	border: #ece9d6 2px solid;
+	border-bottom: #fffef5 2px solid;
+	border-right: #fffef5 2px solid;
+}
+
+.toolbar img {
+	padding: 0px 0.5em 0px 0px;
+	border: none;
+	float: left;
+}
+
+.toolbar select {
+	color: #A0410D;
+	border: none;
+	float: right;
+	font-size: 8pt;
+	font-family: Tahoma, Arial, Helvetica, sans-serif;
+	border: #ece9d6 1px solid;
+	margin: 1px 0px 0px 1px;
+	padding: 2px 2px 2px 4px;
+	height: 20px;
+	background-color: #ffffff;/*#F8F9F5;*/
+}
+
+.toolbar select:hover {
+	border: #FCE171 1px solid;
+	background-color: #ffffff;
+}
+
+.toolbar option {
+	padding: 4px 2px 4px 10px;
+	width: auto;
+	background-color: #F8F9F5;
+}
+
+/* PAGEBAR */
+.pageBar {
+	clear: both;
+	display: block;
+	width: 100%;
+	margin: 0px 0px 5px 0px;
+	padding: 0px 0px 0px 0px;
+	font-family: Tahoma, Arial, Geneva, sans-serif !important;
+	font-size: 8pt;
+	height: 24px;
+}
+
+.pageInfo {
+	color: #555;
+	padding: 5px 0px 0px 5px;
+	float: left;
+}
+
+.pageInfo b {
+	font-weight: bold;
+	color: #222;
+	padding: 0px 0px;
+}
+
+.pageNav {
+	float: right;
+	font-family: Tahoma, Arial, Geneva, sans-serif !important;
+	font-size: 8pt;
+	padding: 0px 0px 0px 0px;
+}
+
+.pageNav div {
+	padding: 3px 7px;
+	margin: 3px 0px 0px 2px;
+	float: left;
+	color: #aaa;
+}
+
+.pageNav a {
+	border: #ece9d6 1px solid;
+	padding: 3px 7px;
+	margin: 3px 0px 0px 2px;
+	display: block;
+	float: left;
+	color: #003366;
+}
+
+.pageNav a:hover {
+	text-decoration: none;
+	background-image: url('../images/pageNav-button-bg.gif');
+	background-repeat: repeat-x;
+	padding: 3px 7px;
+	border: #afcfed 1px solid;
+}
+
+.pageNav a:active {
+	text-decoration: none;
+	padding: 3px 5px 1px 7px;
+	border: #afcfed 2px solid;
+}
+
+.pageNav img {
+	border: none;
+}
+
+.pageNav-pageActive {
+	color: #ffffff;
+	background-color: #122d71;
+	border: #f6f5ed solid 1px;
+	padding: 1px 4px;
+	display: inline;
+	
+	font-weight: bold;
+}
+
+/* LISTVIEW */
+.listview_common {
+	width: 100%;
+	padding: 0px;
+	text-align: center;
+	font-size: 9pt;
+}
+
+.listview_common a {
+	display: block;
+	float: left;
+	width: 100px;
+	height: 130px;
+	margin: 4px 30px 4px 1px;
+	padding: 0px 0px 2px 0px;
+	border: #fff 1px solid;
+	text-align: center;
+	overflow: hidden;
+	color: #A06849 !important;
+	background-color: #ffffff;
+	border: #F9E69B 1px solid;
+	-moz-border-radius: 10px;
+}
+
+.listview_common a:hover {
+	color: #A0410D !important;
+	border: #F9E69B 1px solid;
+	text-decoration: none;
+	background-color: #eeeeee;
+	-moz-border-radius: 10px;
+}
+
+.listview_common a:active {
+}
+
+.listview_common img {
+	border: none;
+	display: block;
+	text-align: center;
+	margin: 5px auto 5px auto;
+}
+
+.dataquest {
+	clear: both;
+	display: block;
+	overflow: hidden;
+	width: 100%;
+	margin: 0px 0px 5px 0px;
+	background-color: #E6F8FF;
+	font-family: Tahoma, Arial, sans-serif; 
+	font-size: 8pt;
+	border: 1px solid #CCEBFD;
+	-moz-border-radius: 3px;
+}
+
+.dataquest table {
+	border: none;
+	border-collapse: collapse;
+	text-align: left;
+	width: 100%;
+	margin: 0px 0px 5px 15px;
+	clear: both;
+}
+
+.dataquest tr {
+}
+
+.dataquest th {
+	color: #534741;
+	text-align: left;
+	font-weight: normal;
+	vertical-align: top;
+	padding: 6px 5px 3px 0px;
+}
+
+.dataquest td {
+	color: #000000;
+	padding: 3px 15px 3px 5px;
+	vertical-align: top;
+}
+
+.dataquest a {
+	color: #313FFF;
+}
+
+.dataquest a:hover {
+}
+
+.dataquest input {
+	font-family: Tahoma, Arial, sans-serif; 
+	font-size: 8pt;
+	border: 1px solid #CCEBFD;
+	padding: 3px 2px;
+}
+
+.dataquest label {
+	font-family: Tahoma, Arial, sans-serif; 
+	font-size: 8pt;
+	padding: 0px 0px;
+}
+
+.dataquest select {
+	font-family: Tahoma, Arial, sans-serif; 
+	font-size: 8pt;
+	border: 1px solid #CCEBFD;
+	padding: 2px 2px;
+}
+
+.dataquest div {
+	padding: 5px 10px 5px 0px;
+	overflow: hidden;
+	color: #534741;
+}
+
+.dataquest .radioButtons {
+}
+
+.dataquest .radioButtons input {
+	padding: 0px 0.4em 4px 0px;
+	margin: 0px 0.4em 0px 0px;
+	float: left;
+}
+
+.dataquest .radioButtons label {
+	padding: 0px 0.6em 0px 0px;
+	margin: 0px 0.4em 0px 0px;
+	float: left;
+}
+
+.dataquest .closedvis {
+	cursor: pointer;
+}
+
+.dataquest .buttonSubmit {
+	border: 1px solid #9CD1F9;
+	background-image: url('../images/dataquest_button_bg.gif') !important;
+	background-repeat: repeat-x;
+	background-color: #E6F7FF;
+	padding: 2px 3px;
+	font-family: Tahoma, Arial, sans-serif; 
+	font-size: 8pt;
+	font-weight: bold;
+	color: #001D47;
+}
+
+.dataquest .buttonSubmit:hover {
+	border: 1px solid #9CD1F9;
+	background-color: #FFFFFF;
+}
+
+.dataquest .buttonSubmit:active {
+	padding: 4px 1px 2px 3px;
+}
+
+.dataquest .drawerButton {
+	font-weight: bold;
+	margin: 0px 0px 0px 5px;
+	padding: 0px;
+	display: block;
+	float: left;
+	background-color: #E6F8FF;
+}
+
+.dataquest .drawerButton a {
+	color: #534741;
+	background-image: url(../images/dataquest-button-expand.gif);
+	background-repeat: no-repeat;
+	background-position: top left;
+	padding: 5px 10px 5px 24px;
+	display: block;
+}
+
+.dataquest .drawerButton a:hover {
+	color: #313FFF;
+}
+
+.searchbox {
+	margin: 5px 0px 0px 0px;
+	font-family: Arial, sans-serif; 
+	font-size: 10pt;
+}
+
+.searchbox .textfield {
+	font-family: Arial, sans-serif; 
+	font-size: 10pt;
+	padding: 3px 3px;
+}
+
+.searchbox select {
+	font-family: Arial, sans-serif; 
+	font-size: 10pt;
+	padding: 2px 3px;
+}
+
+.notebox-done {
+	width: 90%;
+	border: 1px solid #F1C200;
+	padding: 10px 13px 12px 43px;
+	margin: 5px 0px;
+	color: #362F2D;
+	background-color: #FEF8E0;
+	background-image: url('../images/notebox-done-topleft.gif');
+	background-position: top left;
+	background-repeat: no-repeat;
+	-moz-border-radius: 4px;
+}
+
+.petunjuk-area {
+	width: 500px;
+	border: 1px solid #F2EECE;
+	padding: 10px 13px 12px 43px;
+	margin: 5px 0px;
+	color: #362F2D;
+	background-color: #FCFBF3;
+	background-image: url('../images/notebox-info-topleft.gif');
+	background-position: top left;
+	background-repeat: no-repeat;
+	-moz-border-radius: 4px;
+}
+
+.petunjuk-area h2 {
+	font-size: 10pt;
+	color: #362F2D;
+}
+
+.petunjuk-area ul {
+	margin: 5px 0px 0px 20px;
+	padding: 0px;
+}
+
+.petunjuk-area li {
+	margin: 0px;
+}
+
+.notebox-alert {
+	width: 90%;
+	border: 1px solid #F2EECE;
+	padding: 10px 13px 12px 43px;
+	margin: 5px 0px;
+	color: #362F2D;
+	background-color: #FCFBF3;
+	background-image: url('../images/notebox-alert-topleft.gif');
+	background-position: top left;
+	background-repeat: no-repeat;
+	-moz-border-radius: 4px;
+}
+
+.notebox-warning {
+	width: 500px;
+	border: 1px solid #ED1C24;
+	padding: 10px 13px 12px 43px;
+	margin: 5px 0px;
+	color: #fff;
+	background-color: #F25E4F;
+	background-image: url('../images/notebox-warning-topleft.gif');
+	background-position: top left;
+	background-repeat: no-repeat;
+	-moz-border-radius: 4px;
+}
+
+.notebox-warning a {
+	color: #ffffff;
+	text-decoration: underline;
+}

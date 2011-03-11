@@ -1,0 +1,115 @@
+#subcontent-wide {
+	width: 1000px;
+	height: 100%;
+	background-color: #ffffff; /*#F8F9F5;*/
+	padding: 0px 0px 0px 0px;
+	margin: 0px 0px 10px 0px;
+	float: right;
+	position: absolute;
+	left: 181px;
+	top: 110px;
+}
+
+#subcontent-wide-install {
+	width: 100%;
+	height: 100%;
+	background-color: #ffffff; /*#F8F9F5;*/
+	padding: 0px 0px 0px 0px;
+	margin: 0px 0px 10px 0px;
+	float: left;
+	position: absolute;
+	top: 110px;
+}
+
+#subcontent-normal {
+	background-color: #ffffff; /*#F8F9F5;*/
+	padding: 0px;
+	margin: 0px 0px 0px 5px;
+	overflow: hidden;
+	background-image: url('../images/info_area-background.gif');
+}
+
+.subcontent-element {
+	font-family: Arial, Tahoma, sans-serif;
+	font-size: 0.8em;
+	margin: 0px 0px 0px 0px;
+	padding: 5px 10px 30px 15px;
+	/*width: 560px;*/
+}
+
+.subcontent-element h1 {
+	color: #003366;/*#a0410d;*/
+	font-family: Arial, Geneva, sans-serif;
+	font-size: 1.4em;
+	margin: 0px;
+	padding: 0px 0px 0px 0px;
+}
+
+.subcontent-element h2 {
+	color: #004A80;
+	font-family: Arial, Geneva, sans-serif;
+	font-size: 1.2em;
+	margin: 0px;
+	padding: 0px 0px 5px 0px;
+}
+
+.subcontent-element h3 {
+	color: #003366;
+	font-size: 1.0em;
+	margin: 0;
+	padding: 2px 0px 3px 0px;
+}
+
+.subcontent-element h4 {
+	color: #333333;
+	font-size: 1.0em;
+	margin: 0px 0px 0px 0px;
+	padding: 2px 0px 3px 0px;
+}
+
+.subcontent-element h5 {
+	color: #333333;
+	font-size: 1.0em;
+	font-weight: normal;
+	margin: 0px 0px 0px 0px;
+	padding: 2px 0px 3px 0px;
+}
+
+.subcontent-element h6 {
+	color: #333333;
+	font-size: 0.8em;
+	font-weight: normal;
+	margin: 0px 0px 0px 0px;
+	padding: 2px 0px 3px 0px;
+}
+
+.subcontent-element p {
+	margin: 10px 0px;
+	width: auto;
+	line-height: 1.5em;
+}
+
+.subcontent-element small {
+	text-transform: uppercase;
+	font-family: Tahoma, Arial, sans-serif;
+	font-size: 7pt;
+	display: block;
+	width: 80%;
+	border-top: #dddddd 1px dotted;
+	margin: 50px 0px 0px 0px;
+}
+
+.subcontent-navigation {
+	color: #333333;
+	font-size: 9pt;
+	margin: 0px 0px 10px 0px;
+	padding: 5px 0px 6px 0px;
+	border-bottom: #ece9d6 1px solid;
+}
+
+.subcontent-navigation a {
+	color: #003366;
+}
+
+.subcontent-navigation a:hover {
+}
