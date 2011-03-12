@@ -67,24 +67,27 @@
         <li <?php if ($i==0) { ?>class="current"<?php } ?>> 
           <div class="featured_box"> 
             <h2><a style="color:#FFFFFF" href="<?php echo $value['posting_url']; ?>"><?php echo $value['posting_title']; ?></a></h2>
-			<small><?php echo $value['posting_date']; ?></small>
+			<small><?php //echo $value['posting_date']; ?></small>
             <p><?php echo $value['posting_little_content']; ?></p>
-            <p class="readmore"><a href="<?php echo $value['posting_url']; ?>">Continue Reading &raquo;</a></p>
+            <p class="readmore"><a href="<?php echo $value['posting_url']; ?>">Reading &raquo;</a></p>
           </div>
           <div class="featured_tab"> 
 			<?php if (!empty($value['posting_thumbnail'])) { ?>
-		  	<img src="<?php echo $value['posting_thumbnail']; ?>" alt="" /> 
+		  	<img src="<?php echo $value['posting_thumbnail']; ?>" alt="" width="100" height="67"/> 
 			<?php 
 			} 
 			else {
 			?>
 			<img src="{theme_url}/images/demo/100x100.gif" alt="" />
 			<?php } ?>
-            <p>Hot News <?php echo ($i+1); ?></p>
+            <p><?php echo $value['posting_title']; ?></p>
           </div>
         </li>
 		<?php 
 		$i++;
+			if($i==5){
+				break;
+			}
 		} 
 		?>
       </ul>
@@ -113,7 +116,7 @@
 		<p><?php echo $value['posting_middle_content']; ?></p>
 		</div>
 		<div style="clear:both"></div>
-		<p class="readmore"><a href="<?php echo $value['posting_url']; ?>">Continue Reading &raquo;</a></p>
+		<p class="readmore"><a href="<?php echo $value['posting_url']; ?>">Reading &raquo;</a></p>
 		<div style="clear:both"></div>
 	<?php } ?>
 	<?php } ?>
