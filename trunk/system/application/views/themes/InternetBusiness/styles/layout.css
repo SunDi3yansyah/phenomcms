@@ -57,7 +57,7 @@ h1, h2, h3, h4, h5, h6{
 
 .wrapper{
 	display:block;
-	width:921px;
+	width:920px;
 	padding:15px 10px;
 	color:#666666;
 	background-color:#FFFFFF;
@@ -110,8 +110,8 @@ h1, h2, h3, h4, h5, h6{
 #topbar #search{
 	display:block;
 	float:right;
-	width:251px;
-	height:35px;
+	width:250px;
+	height:36px;
 	margin:0;
 	padding:10px 0 0 8px;
 	color:#FFFFFF;
@@ -235,7 +235,7 @@ h1, h2, h3, h4, h5, h6{
 #content{
 	display:block;
 	float:left;
-	width:570px;
+	width:620px;
 	background-color:#F5F5F5;
 	padding:10px;
 	}
@@ -287,7 +287,7 @@ h1, h2, h3, h4, h5, h6{
 #column{
 	display:block;
 	float:right;
-	width:300px;
+	width:250px;
 	padding:10px 10px 0 10px;
 	background-color:#F5F5F5;
 	}
@@ -354,7 +354,7 @@ h1, h2, h3, h4, h5, h6{
 
 #column #featured li{
 	display:block;
-	width:250px;
+	width:200px;
 	margin:0;
 	padding:20px 25px;
 	color:#666666;
