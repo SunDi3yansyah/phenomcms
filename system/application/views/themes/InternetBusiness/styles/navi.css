@@ -43,10 +43,15 @@ Licence: <a href="http://creativecommons.org/licenses/by-sa/3.0/">Creative Commo
 	margin-right:0;
 	}
 
-#topnav li a:hover, #topnav ul li.current a{
+ #topnav ul li.current a{
 	color:#FFFFFF;
 	background-color:#059BD8;
 	}
+	#topnav li a:hover{
+		color:#059BD8;
+		background-color:#525252;
+	}
+	
 	
 #topnav li li a:link, #topnav li li a:visited{
 	width:150px;
@@ -89,7 +94,7 @@ Licence: <a href="http://creativecommons.org/licenses/by-sa/3.0/">Creative Commo
 
 /* ----------------------------------------------Column Navigation-------------------------------------*/
 
-#column .subnav{display:block; width:250px; padding:5px 25px 0px 25px; background-color:#F9F9F9; margin-bottom:10px;}
+#column .subnav{display:block; width:200px; padding:5px 25px 0px 25px; background-color:#F9F9F9; margin-bottom:10px;}
 
 #column .subnav h2{
 	margin:0 0 5px 0;
