@@ -62,6 +62,10 @@ $route['search'] = "main/search/";
 $route['polling'] = "main/polling/";
 $route['polling/(:num)'] = "main/polling/$1";
 
+$route['services'] = "main/services";
+$route['services/(:any)'] = "main/services/$1";
+
+
 $route['gallery'] = "main/gallery";
 $route['gallery/(:num)'] = "main/gallery/$1";
 $route['album/(:num)'] = "main/album/$1";
@@ -169,6 +173,18 @@ $route['cpm/menu_url_input/(:num)'] = "admin/menu/menu_url_input/$1";
 $route['cpm/menu_uri_input/(:num)'] = "admin/menu/menu_uri_input/$1";
 $route['cpm/menu_module_input/(:num)'] = "admin/menu/menu_module_input/$1";
 
+
+$route['cpm/services'] = "admin/services/services_list";
+$route['cpm/services/(:num)'] = "admin/services/services_list/$1";  // paging
+$route['cpm/services_form_insert'] = "admin/services/services_form_insert";
+$route['cpm/services_form_insert_html'] = "admin/services/services_form_insert_html";
+$route['cpm/services_form_edit/(:num)'] = "admin/services/services_form_edit/$1";
+$route['cpm/services_form_edit_html/(:num)'] = "admin/services/services_form_edit_html/$1";
+$route['cpm/services_insert'] = "admin/services/services_insert";
+$route['cpm/services_edit'] = "admin/services/services_edit";
+$route['cpm/services_delete/(:num)'] = "admin/services/services_delete/$1";
+
+
 $route['cpm/guestbook'] = "admin/guestbook/guestbook_list";
 $route['cpm/guestbook/(:num)'] = "admin/guestbook/guestbook_list/$1";  // paging
 $route['cpm/guestbook_selected_process'] = "admin/guestbook/guestbook_selected_process";
@@ -207,17 +223,6 @@ $route['cpm/polling_pil_shiftdown/(:num)/(:num)'] = "admin/polling/polling_pil_s
 
 $route['cpm/password'] = "admin/password/get_password";
 $route['cpm/password_edit'] = "admin/password/password_edit";
-
-
-
-
-
-
-
-
-
-
-
 
 
 $route['cpm/komentar_halaman'] = "admin/komentar_halaman/komentar_halaman_list";
