@@ -54,33 +54,33 @@
   </div>
 </div>
 <!-- ####################################################################################################### -->
-<?php if(!empty($new_posting_title)) { ?>
+<?php if(!empty($recent_services)) { ?>
 <div id="featured_slide">
   <div class="wrapper">
     <div class="featured_content"> 
       <ul id="accordion">
 	  	<?php 
 		$i=0;
-		foreach ($recent_posts as $row=>$value) 
+		foreach ($recent_services as $row=>$value) 
 		{ 
 		?>
         <li <?php if ($i==0) { ?>class="current"<?php } ?>> 
           <div class="featured_box"> 
-            <h2><a style="color:#FFFFFF" href="<?php echo $value['posting_url']; ?>"><?php echo $value['posting_title']; ?></a></h2>
+            <h2><a style="color:#FFFFFF" href="<?php echo $value['service_url']; ?>"><?php echo $value['service_title']; ?></a></h2>
 			<small><?php //echo $value['posting_date']; ?></small>
-            <p><?php echo $value['posting_little_content']; ?></p>
-            <p class="readmore"><a href="<?php echo $value['posting_url']; ?>">Reading &raquo;</a></p>
+            <p><?php echo $value['service_little_content']; ?></p>
+            <p class="readmore"><a href="<?php echo $value['service_url']; ?>">Reading &raquo;</a></p>
           </div>
           <div class="featured_tab"> 
-			<?php if (!empty($value['posting_thumbnail'])) { ?>
-		  	<img src="<?php echo $value['posting_thumbnail']; ?>" alt="" width="100" height="67"/> 
+			<?php if (!empty($value['service_thumbnail'])) { ?>
+		  	<img src="<?php echo $value['service_thumbnail']; ?>" alt="" width="100" height="67"/> 
 			<?php 
 			} 
 			else {
 			?>
 			<img src="{theme_url}/images/demo/100x100.gif" alt="" />
 			<?php } ?>
-            <p><?php echo $value['posting_title']; ?></p>
+            <p><?php echo $value['service_title']; ?></p>
           </div>
         </li>
 		<?php 
