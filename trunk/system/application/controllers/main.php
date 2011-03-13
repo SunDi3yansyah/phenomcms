@@ -73,6 +73,12 @@ class Main extends Controller {
 		$main_data = $this->main_data->get_data('gallery',$id);
 		$this->parser->parse('themes/'.$main_data['theme'].'/gallery',$main_data);
 	}
+	
+	function services($id = '')
+	{
+		$main_data = $this->main_data->get_data('services',$id);
+		$this->parser->parse('themes/'.$main_data['theme'].'/services',$main_data);
+	}
 
 	function polling($id = '')
 	{
