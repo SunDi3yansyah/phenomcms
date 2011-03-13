@@ -1792,7 +1792,8 @@ class General extends Model {
 		return ($query);
 	}
 
-//------------------------------------------------------------------------------------------------------------------------
+
+//-------------------------------------------------------------------------------------------------------------------
 
 
 //--------------------------------------GUESTBOOK-----------------------------------------------------------------------------
@@ -2035,9 +2036,6 @@ class General extends Model {
 
 //------------------------------------------------------------------------------------------------------------------------
 
-
-
-
 	function get_menu_category($user)
 	{
 		$this->load_db($user);
@@ -2092,6 +2090,292 @@ class General extends Model {
 		$data['base_url'] = config_item('base_url');
 		return ($data);
 	}
+	
+	
+//--------------------------------------Thuongdd------------------------------------------------------------------------------------
+	
+//--------------------------------------Services-----------------------------------------------------------------------------
+	
+	function get_services_list($user)
+	{
+		$this->load_db($user);
+		if (trim($_POST['post_search'])!='') {
+			$search = $_POST['post_search'];
+			$post_search_string = " and (services_title like '%$search%' or services_content like '%$search%' ) ";
+			$this->session->set_userdata('post_search_string',$post_search_string);
+			$this->session->set_userdata('post_search_key',$search);
+		}
+		if (!empty($_POST['post_search_submit']) & trim($_POST['post_search'])=='') {
+			$this->session->unset_userdata('post_search_string');
+			$this->session->unset_userdata('post_search_key');
+		}
+		
+		$sql = "select * FROM t_services where service_category_id >0  ". $this->session->userdata('post_search_string')." order by service_date desc";
+		//echo $sql;
+		//die;
+		$query = $this->db->query("select count(service_id) as jum FROM t_services where service_category_id >0 ". $this->session->userdata('post_search_string')." order by service_date desc");
+		$row = $query->row_array(0);
+		$count = $row['jum'];
+		$data = $this->pagination_model->paging(config_item('index_page').'/cpm/services/',3, $sql, $count, 10, 2);
+		if (!empty($data['result'])) {
+		foreach ($data as $key=>$entry) {
+			foreach ($entry as $row=>$value) {
+				$data['multiple record last posted list index'][$row]['no'] = ($row + 1);
+
+				$x = explode(".",$value['service_image']);
+				$ext = $x[count($x)-1];
+				$y = explode(".".$ext,$value['service_image']);
+				$thumbnail_file = config_item('base_url')."/userfiles/image/services/".$y[0]."_thumb.".$ext;
+				$data['multiple record last posted list index'][$row]['mrc_image'] = $thumbnail_file;
+
+				$data['multiple record last posted list index'][$row]['mrc_date'] = $this->IndonesianDate($value['service_date']);
+				$data['multiple record last posted list index'][$row]['mrc_title'] = $value['service_title'];
+				$data['multiple record last posted list index'][$row]['mr_name'] = $value['service_category_id'];
+				$data['multiple record last posted list index'][$row]['posted_by'] = $value['service_by'];
+
+				// Ambil jumlah komentar
+				$query_comment = $this->db->query("select count(comment_id) as jum from t_comments where comment_posting_id='".$value['posting_id']."'");
+				$row_comment = $query_comment->row_array(0);
+				$comment_count = $row_comment['jum'];
+				if ($comment_count>0)
+				{
+					$comment_link = 
+					"<a href='".reduce_double_slashes(config_item('base_url').config_item('index_page').'/cpm/komentar_posting/'.$value['posting_id']."/")."'>
+					<img src='".config_item('base_url')."/files/admin/images/comment.gif'> &nbsp;".$comment_count." Comments</a>";
+				}
+				else
+				{
+					$comment_link = 
+					"<a href='#'>
+					<img src='".config_item('base_url')."/files/admin/images/comment.gif'> &nbsp;".$comment_count." Comments</a>";
+				}
+
+				$data['multiple record last posted list index'][$row]['url action'] = 
+				$comment_link.
+				"<a href='".reduce_double_slashes(config_item('base_url').config_item('index_page').'/cpm/services_form_edit/'.$value['service_id']."/")."'>
+				<img src='".config_item('base_url')."/files/admin/images/edit.gif'></a>
+				<a href='".reduce_double_slashes(config_item('base_url').config_item('index_page').'/cpm/services_delete/'.$value['service_id']."/")."' onClick=\"return confirm('Are you sure you want to delete this services?')\">
+				<img src='".config_item('base_url')."/files/admin/images/delete.gif'></a>";
+				
+				if ($value['posting_visible']=='0') $data['multiple record last posted list index'][$row]['alert'] = 'table-common-alert';
+				else $data['multiple record last posted list index'][$row]['alert'] = '';
+
+				$content = strip_tags(trim(substr($value['service_content'],0,200)));
+				$x = strpos(strrev($content)," ");
+			 	$length = strlen($content) - $x - 1;
+	 			$content = substr($content,0,$length);
+
+				$data['multiple record last posted list index'][$row]['mrc_content'] = $content.'...';
+
+				$data['page_nav'] = $this->pagination->create_links();
+			}
+		}
+		}
+		else {
+				$data['multiple record last posted list index'][0]['no'] = '...';
+				$data['multiple record last posted list index'][0]['url action'] = '...';
+				$data['multiple record last posted list index'][0]['mr_name'] = '...';
+				$data['multiple record last posted list index'][0]['mrc_mr_id '] = '';
+				$data['multiple record last posted list index'][0]['mrc_date'] = '';
+				$data['multiple record last posted list index'][0]['mrc_title'] ='...';
+				$data['multiple record last posted list index'][0]['mrc_content'] ='...';
+				$data['multiple record last posted list index'][0]['posted_by'] ='';
+				$data['multiple record last posted list index'][0]['comment_count'] ='';
+				$data['multiple record last posted list index'][0]['index_comment_count'] = '';
+				$data['page_nav'] = $this->pagination->create_links();
+		}
+		$data['url insert'] = reduce_double_slashes(config_item('base_url').config_item('index_page').'/cpm/services_form_insert/');
+		return ($data);
+	}
+
+	function get_services_detil($user,$id)
+	{
+		$this->load_db($user);
+		$query = $this->db->query("select * FROM t_services where service_id = '$id'");
+		$result['mr'] = $query->result_array();
+		if (!empty($result['mr'])) {
+			$x = explode(".",$result['mr'][0]['service_image']);
+			$ext = $x[count($x)-1];
+			$y = explode(".".$ext,$result['mr'][0]['service_image']);
+			$thumbnail_file = config_item('base_url')."/userfiles/image/services/".$y[0]."_thumb.".$ext;
+			$data['mrc_image'] = $result['mr'][0]['service_image'];
+			$data['mrc_thumbnail'] = $thumbnail_file;
+
+			$data['multiple record mrc_id'] = $result['mr'][0]['service_id'];
+			$data['multiple record mrc_mr_id'] = $result['mr'][0]['service_id'];
+			$data['multiple record mrc_title'] = $result['mr'][0]['service_title'];
+			$data['multiple record mrc_seo'] = $result['mr'][0]['service_seo'];
+			$data['multiple record mrc_date'] = $result['mr'][0]['service_date'];
+			$data['multiple_record_mrc_content'] = $result['mr'][0]['service_content'];
+			$data['multiple_record_mrc_thumbnail'] = $result['mr'][0]['service_image'];
+			$data['multiple_record_mrc_visible'] = $result['mr'][0]['service_visible'];
+			$data['multiple_record_mrc_comment_status'] = $result['mr'][0]['service_comment_status'];
+			//print_r($data);
+
+			return ($data);
+		}
+		else {
+			$data['multiple record id'] = '';
+			$data['multiple record mrc_mr_id'] = '';
+			$data['multiple record mrc_title'] = '';
+			$data['multiple_record_mrc_content'] = '';
+			$data['multiple_record_mrc_thumbnail'] = '';
+			$data['multiple_record_mrc_visible'] = '';
+			$data['multiple_record_mrc_comment_status'] = '';
+		}
+		return ($data);
+	}
+
+	function services_insert($user, $data)
+	{
+		$this->load_db($user);
+		if (trim($data['mrc_title'])=='' | empty($data['mrc_mr_id']) | trim($data['mrc_mr_id']) == '') return;
+		if (trim($_FILES['mrc_thumbnail']['name'])=='') $image = '';
+		else $image = $_FILES['mrc_thumbnail']['name'];
+		$data_mr = array(
+							'service_category_id' => $data['mrc_mr_id'],
+							'service_title' => $data['mrc_title'],
+							'service_seo' => $data['mrc_seo'],
+							'service_type' => 'post',
+							'service_date' => $data['mrc_date'],
+							'service_content' => $data['FCKeditor1'],
+							'service_image' => $image,
+							'service_visible' =>  $data['mrc_visibile'],
+							'service_comment_status' =>  $data['mrc_comment_status']
+						);
+		//echo "<pre>"; print_r($data_mr); echo"</pre>";
+						
+		$query = $this->db->insert('t_services', $data_mr);
+		if ($query) 
+		{
+			if (!empty($_FILES['mrc_thumbnail']['tmp_name'])) {
+				$filename = "./userfiles/image/services/".$image;
+				copy($_FILES['mrc_thumbnail']['tmp_name'], $filename);
+
+				$x = explode(".",$image);
+				$ext = $x[count($x)-1];
+				$y = explode(".".$ext,$image);
+				$thumbnail_file = "./userfiles/image/services/".$y[0]."_thumb.".$ext;
+				copy($_FILES['mrc_thumbnail']['tmp_name'], $thumbnail_file);
+
+				$config['image_library'] = 'gd2';
+				$config['source_image'] = $filename;
+				$config['maintain_ratio'] = TRUE;
+				$config['width'] = 200;
+				$config['height'] = 200;
+				$this->load->library('image_lib',$config);
+				$this->image_lib->initialize($config);
+				$this->image_lib->resize();
+				@chmod($filename, 0777);
+
+				$config['image_library'] = 'gd2';
+				$config['source_image'] = $thumbnail_file;
+				$config['maintain_ratio'] = TRUE;
+				$config['width'] = 100;
+				$config['height'] = 100;
+				$this->load->library('image_lib',$config);
+				$this->image_lib->initialize($config);
+				$this->image_lib->resize();
+				@chmod($thumbnail_file, 0777);
+			}
+			
+		}
+		return;
+	}
+
+	function services_edit($user, $data)
+	{
+		$this->load_db($user);
+
+		$query = $this->db->query("select service_image as image FROM t_services where service_id = '".$data['mrc_id']."'");
+		$row = $query->row_array(0);
+		$current_image = "./userfiles/image/services/".$row['image'];
+
+		$x = explode(".",$row['image']);
+		$ext = $x[count($x)-1];
+		$y = explode(".".$ext,$row['image']);
+		$current_thumbnail = "./userfiles/image/services/".$y[0]."_thumb.".$ext;
+
+		$id = $data['mrc_id'];
+		if (trim($data['mrc_title'])=='' | empty($data['mrc_mr_id']) | trim($data['mrc_mr_id']) == '') return;
+		if (empty($data['mrc_mr_id']) | trim($data['mrc_mr_id']) == '') return;
+		if (trim($_FILES['mrc_thumbnail']['name'])=='') $image = $data['mrc_current_thumbnail'];
+		else $image = $_FILES['mrc_thumbnail']['name'];
+		$data_mr = array(
+							'service_category_id' => $data['mrc_mr_id'],
+							'service_title' => $data['mrc_title'],
+							'service_seo' => $data['mrc_seo'],
+							'service_date' => $data['mrc_date'],
+							'service_content' => $data['FCKeditor1'],
+							'service_image' => $image,
+							'service_visible' =>  $data['mrc_visibile'],
+							'service_comment_status' =>  $data['mrc_comment_status']
+						);
+		//echo "<pre>"; print_r($data_mr); echo"</pre>";
+		$query = $this->db->update('t_services', $data_mr, array('service_id' => $id));
+		if ($query) 
+		{
+			if (!empty($_FILES['mrc_thumbnail']['tmp_name'])) {
+				if (file_exists($current_image)) {
+					@unlink($current_image);
+					@unlink($current_thumbnail);
+				}
+
+				$filename = "./userfiles/image/services/".$image;
+				copy($_FILES['mrc_thumbnail']['tmp_name'], $filename);
+
+				$x = explode(".",$image);
+				$ext = $x[count($x)-1];
+				$y = explode(".".$ext,$image);
+				$thumbnail_file = "./userfiles/image/services/".$y[0]."_thumb.".$ext;
+				copy($_FILES['mrc_thumbnail']['tmp_name'], $thumbnail_file);
+
+				$config['image_library'] = 'gd2';
+				$config['source_image'] = $filename;
+				$config['maintain_ratio'] = TRUE;
+				$config['width'] = 200;
+				$config['height'] = 200;
+				$this->load->library('image_lib',$config);
+				$this->image_lib->initialize($config);
+				$this->image_lib->resize();
+				@chmod($filename, 0777);
+
+				$config['image_library'] = 'gd2';
+				$config['source_image'] = $thumbnail_file;
+				$config['maintain_ratio'] = TRUE;
+				$config['width'] = 100;
+				$config['height'] = 100;
+				$this->load->library('image_lib',$config);
+				$this->image_lib->initialize($config);
+				$this->image_lib->resize();
+				@chmod($thumbnail_file, 0777);
+			}			
+		}
+		return ($query);
+	}
+
+	function services_delete($user, $id)
+	{
+		$this->load_db($user);
+		$query = $this->db->query("select service_image as image FROM t_services where service_id = '$id'");
+		$row = $query->row_array(0);
+			
+		$current_image = "./userfiles/image/services/".$row['image'];
+		$x = explode(".",$row['image']);
+		$ext = $x[count($x)-1];
+		$y = explode(".".$ext,$row['image']);
+		$current_thumbnail = "./userfiles/image/services/".$y[0]."_thumb.".$ext;
+		if (@file_exists($current_image)) {
+			@unlink($current_image);
+			@unlink($current_thumbnail);
+		}
+		$query = $this->db->delete('t_services', array('service_id' => $id)); 
+		return;
+	}
+ #-----------------------------------------End module services-----------------------------------------------------------------
+ 
+ #-----------------------------------------Load function off all module-----------------------------------------------------------------
+
 
 	function get_script($ctype,$user,$id=0)
 	{		
@@ -2169,11 +2453,24 @@ class General extends Model {
 			$album_detil = array();
 		}
 
-
 		if ($ctype=='guestbook') $guestbook = $this->get_guestbook_list($user);
 		else $guestbook = array();
+		
+		//print_r($ctype);
+		if ($ctype=='services_list') 
+			$services_list = $this->get_services_list($user);
+		else 
+			$services_list = array();
 
+		if ($ctype=='services_form_insert') 
+			$services_form_insert = $this->get_post_category($user);
+		else 
+			$services_form_insert = array();
 
+		if ($ctype=='services_edit') 
+			$services_detil = $this->get_services_detil($user,$id);
+		else 
+			$services_detil = array();
 
 		if ($ctype=='polling_list') $polling_list = $this->polling_model->get_polling_list($user);
 		else $polling_list = array();
@@ -2212,7 +2509,10 @@ class General extends Model {
 									$polling_detil,
 									$komentar_halaman_list,
 									$profile,
-									$themes
+									$themes,
+									$services_list,
+									$services_form_insert,
+									$services_detil
 									);
 		return ($return_value);
 	}
