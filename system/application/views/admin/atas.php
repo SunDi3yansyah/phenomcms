@@ -74,6 +74,7 @@
 
   <h3>Module</h3>
 	<ul>
+		<li><a href="<?php echo reduce_double_slashes(config_item('base_url').config_item('index_page')."/cpm/services/") ?>">Services</a></li>
 		<li><a href="<?php echo reduce_double_slashes(config_item('base_url').config_item('index_page')."/cpm/album/") ?>">Photo Galery</a></li>
 		<li><a href="<?php echo reduce_double_slashes(config_item('base_url').config_item('index_page')."/cpm/guestbook/") ?>">Guest Book</a></li>
 		<li><a href="<?php echo reduce_double_slashes(config_item('base_url').config_item('index_page')."/cpm/polling/") ?>">Polls</a></li>
