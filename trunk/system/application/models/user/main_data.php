@@ -19,6 +19,7 @@ class main_data extends Model {
 		$this->load->database('default');
 		$this->load->model('user/pages');
 		$this->load->model('user/posting');
+		$this->load->model('user/services');
 		$this->load->model('user/tag');
 		$this->load->model('user/panel');
 		$this->load->model('user/search');
@@ -34,6 +35,7 @@ class main_data extends Model {
 		$data['base_url'] = config_item('base_url').config_item('index_page');
 		$data['gallery_url'] = reduce_double_slashes(config_item('base_url').config_item('index_page').'/gallery/');
 		$data['guestbook_url'] = reduce_double_slashes(config_item('base_url').config_item('index_page').'/guestbook/');
+		$data['services_url'] = reduce_double_slashes(config_item('base_url').config_item('index_page').'/services/');
 		return $data;
 	}
 
@@ -99,13 +101,14 @@ class main_data extends Model {
 		$theme = $this->get_theme();
 		$kategori = $this->posting->get_category();
 		$recent_posting = $this->posting->get_recents();
-		
+		$recent_services=$this->services->get_services();
+//		echo "<pre>"; print_r($recent_services); echo "</pre>";
 		$menu = $this->posting->get_all_menu();
 
 		$recent_posts_by_all_category = $this->posting->get_recent_posts_by_all_category();
 		
 		// Ambil data panel posting berdasarkan kategori
-		$query = $this->db->query("SELECT category_id FROM t_category WHERE category_visible='1'");
+		$query = $this->db->query("SELECT category_id FROM t_category WHERE category_visible='0'");
 		$result = $query->result_array();
 		$recent_posts_by_one_category=array();
 		foreach ($result as $row=>$value)
@@ -149,15 +152,23 @@ class main_data extends Model {
 
 		if ($act=='guestbook') 
 		{
+			
 			$title = 'Guestbook';
 			$this->session->set_userdata('page', $id);
 			$guestbook = $this->guestbook->get_guestbook($id, $msg);
 			//$guestbook_current = array('guestbook_current'=>'current');
 			//$this->session->set_userdata('page', '');
-		}
-		else {
+		}else {
 			$guestbook = array();
 			//$guestbook_current = array('guestbook_current'=>'');
+		}
+		if ($act=='services') {
+			$this->session->set_userdata('page', 3);
+			$service_detail = $this->services->get_service_detail($id);			
+			$title = $service_detail['service_title'];
+		}else{
+			
+			$service_detail = array();
 		}
 		
 		if ($act=='page') 
@@ -204,13 +215,16 @@ class main_data extends Model {
 		}
 
 		$app_title = $this->get_app($title);
-
+		//echo "<pre>";print_r($page_list);echo "</pre>";
+		
+		
 		
 		// Gabungkan semua data dalam sebuah array
 		$return_value = array_merge($theme,
 									$home_current,
 									$page_list,
 									$recent_posting,
+									$recent_services,
 									$recent_posts_by_all_category,
 									$recent_posts_by_one_category,
 									$newest_posting,
@@ -233,7 +247,9 @@ class main_data extends Model {
 									$polling,
 									$polling_result,
 									$guestbook,
-									$app_title
+									$app_title,
+								//	$service_list,
+									$service_detail
 									);
 		//print_r($return_value);
 		//exit;
