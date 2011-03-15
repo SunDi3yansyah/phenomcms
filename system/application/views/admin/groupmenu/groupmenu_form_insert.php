@@ -8,13 +8,13 @@
 Insert
 </div>
 
-    <h2>Tambah Group Menu</h2>
+    <h2>Add Group Menu</h2>
 <br />
 
 <form method="post" name="phenomcms" action="<?php echo config_item('base_url').config_item('index_page') ?>/cpm/groupmenu_insert/">
 <table class="table-form">
 <tr>
-	<th>Nama Group Menu</th>
+	<th>Group Menu Name</th>
 	<th>:</th>
 	<td>
 	<input name="mr_name" type="text" size="60">
@@ -24,13 +24,13 @@ Insert
 	<th width="100px">Status</th>
 	<th>:</th>
 	<td>
-	<input name="mr_visibile" type="radio" value="1" checked> Tampilkan
-	<input name="mr_visibile" type="radio" value="0"> Sembunyikan
+	<input name="mr_visibile" type="radio" value="1" checked> Show
+	<input name="mr_visibile" type="radio" value="0"> Hide
 	</td>
 </tr>
 <tr>
 	<td colspan="3">
-	<input type="submit" value="Simpan">
+	<input type="submit" value="Save">
 	<input type="reset" value="Reset">
 	</td>
 </tr>

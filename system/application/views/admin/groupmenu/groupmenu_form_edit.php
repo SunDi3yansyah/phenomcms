@@ -14,7 +14,7 @@ Edit
 <form method="post" name="phenomcms" action="<?php echo config_item('base_url').config_item('index_page') ?>/cpm/groupmenu_edit/">
 <table class="table-form">
 <tr>
-	<th>Nama Group Menu</th>
+	<th>Group Menu Name</th>
 	<th>:</th>
 	<td>
 	<input name="mr_id" type="hidden" value="{multiple record id}">
@@ -31,13 +31,13 @@ Edit
 	if ($multiple_record_visible=='0') $checked0 = 'checked';
 	else $checked0 = '';
 	?>
-	<input name="mr_visibile" type="radio" value="1" <?php echo $checked1?>> Tampilkan
-	<input name="mr_visibile" type="radio" value="0" <?php echo $checked0?>> Sembunyikan
+	<input name="mr_visibile" type="radio" value="1" <?php echo $checked1?>> Show
+	<input name="mr_visibile" type="radio" value="0" <?php echo $checked0?>> Hide
 	</td>
 </tr>
 <tr>
 	<td colspan="3">
-	<input type="submit" value="Simpan">
+	<input type="submit" value="Save">
 	<input type="reset" value="Reset">
 	</td>
 </tr>

@@ -11,7 +11,7 @@ Group Menu
 <br />
 
 <div class="toolbar">
-<a href="{url insert}">Tambah Group Menu</a>
+<a href="{url insert}">Add Group Menu</a>
 </div>
 <br />
 <br />
@@ -20,7 +20,7 @@ Group Menu
 <tr>
 	<th width="5%">No.</th>
 	<th>Group Menu</th>
-	<th width="130px">Aksi</th>
+	<th width="130px">Action</th>
 </tr>
 {multiple_record_sidebar}
 <tr class="{alert}">
