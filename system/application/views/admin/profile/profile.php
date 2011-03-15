@@ -14,7 +14,7 @@ Profile
 <form method="post" action="<?php echo config_item('base_url').config_item('index_page') ?>/cpm/profile_edit/">
       <table class="table-form" style="width:800px">
         <tr> 
-          <th>Nama Situs</th>
+          <th>Site Name</th>
           <th>:</th>
           <td> <input name="app_title" type="text" size="100" value="<?php echo $app_title ?>"> 
           </td>
@@ -69,7 +69,7 @@ Profile
           </td>
         </tr>
         <tr> 
-          <th>Terima Buku Tamu</th>
+          <th>Thank Guestbook</th>
           <th>:</th>
           <td>
 		  <input name='app_gb_approval' type="radio" value="1" {app_gb_approval1}> Through Approval
@@ -77,7 +77,7 @@ Profile
           </td>
         </tr>
         <tr> 
-          <th>Terima Komentar</th>
+          <th>Thank Commentsr</th>
           <th>:</th>
           <td>
 		  <input name='app_comment_approval' type="radio" value="1" {app_comment_approval1}>Through Approval
