@@ -30,7 +30,7 @@
 
 <div class="subcontent-navigation">
 <a href="{base_url}cpm">Home</a> &gt;  
-<a href="{base_url}cpm/directory/modul/">Modul</a> &gt;  
+<a href="{base_url}cpm/directory/modul/">Module</a> &gt;  
 Album
 </div>
 
@@ -38,7 +38,7 @@ Album
 <br />
 
 <div class="toolbar">
-<a href="{url insert}">Tambah Album Baru</a>
+<a href="{url insert}">Add New Album</a>
 </div>
 <br />
 
@@ -48,11 +48,11 @@ Album
 <table class="table-common" width="800px">
 <tr>
 	<th>No.</th>
-	<th>Tanggal</th>
+	<th>Date</th>
 	<th>Thumbnail</th>
-	<th>Judul Album</th>
-	<th>Deskripsi</th>
-	<th width="100px">Aksi</th>
+	<th>Album Title</th>
+	<th>Description</th>
+	<th width="100px">Action</th>
 </tr>
 {album}
 <tr class="{alert}">

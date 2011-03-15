@@ -7,7 +7,7 @@ include("./files/admin/jscripts/fckeditor/fckeditor.php") ;
 
 <div class="subcontent-navigation">
 <a href="{base_url}cpm">Home</a> &gt;  
-<a href="{base_url}cpm/directory/modul/">Modul</a> &gt;  
+<a href="{base_url}cpm/directory/modul/">Module</a> &gt;  
 <a href="{base_url}cpm/album">Album</a> &gt; 
 Edit
 </div>
@@ -17,7 +17,7 @@ Edit
 <form enctype="multipart/form-data" method="post" name="phenomcms" action="<?php echo config_item('base_url').config_item('index_page') ?>/cpm/album_edit/">
 <table class="table-form" style="width:800px">
 <tr>
-	<th>Judul Album</th>
+	<th>Album Title</th>
 	<th>:</th>
 	<td>
 	<input name="album_id" type="hidden" value="{album_id}">
@@ -34,12 +34,12 @@ Edit
 	if ($album_visible=='0') $checked0 = 'checked';
 	else $checked0 = '';
 	?>
-	<input name="album_visible" type="radio" value="1" <?php echo $checked1?>> Tampilkan
-	<input name="album_visible" type="radio" value="0" <?php echo $checked0?>> Sembunyikan
+	<input name="album_visible" type="radio" value="1" <?php echo $checked1?>> Show
+	<input name="album_visible" type="radio" value="0" <?php echo $checked0?>> Hide
 	</td>
 </tr>
 <tr>
-	<th width="100px">Deskripsi</th>
+	<th width="100px">Description</th>
 	<th>:</th>
 	<td>
 	<textarea name="album_desc" cols="117" rows="5">{album_desc}</textarea>
@@ -56,7 +56,7 @@ Edit
 
 <tr>
 	<td colspan="3">
-	<input type="submit" value="Simpan">
+	<input type="submit" value="Save">
 	<input type="reset" value="Reset">
 	</td>
 </tr>
@@ -64,7 +64,7 @@ Edit
 </form>
 
 
-<h3>Upload Foto:</h3>
+<h3>Upload photo:</h3>
 <form enctype="multipart/form-data" method="post" name="phenomcms" action="<?php echo config_item('base_url').config_item('index_page') ?>/cpm/photo_insert/{album_id}">
 <table class="table-form">
 <tr>
@@ -85,18 +85,18 @@ Edit
 	else
 	{
 	fup.value="";
-	alert("Hanya file JPG atau PNG yang diperbolehkan!");
+	alert("Only JPG or PNG files allowed!");
 	return false;
 	}
 	}
 	</script>
 	<input name="photo_image" type="file" id="filename" onchange="return Checkfiles()"> (jpg/png)
 	<br />
-	Pastikan GD Library (php_gd2) sudah diinstall di server Anda.
+	Make sure GD Library (php_gd2) already installed on your server.
 	</td>
 </tr>
 <tr>
-	<th width="100px">Deskripsi</th>
+	<th width="100px">Description</th>
 	<th>:</th>
 	<td>
 	<input name="photo_desc" type="text" size="80" >
@@ -117,22 +117,22 @@ Edit
 
 
 <?php if (!empty($photo)) { ?>
-<h3>Daftar Foto:</h3>
+<h3>Photo List:</h3>
 <br />
 <form enctype="multipart/form-data" method="post" name="phenomcms" action="<?php echo config_item('base_url').config_item('index_page') ?>/cpm/photo_process/{album_id}">
 <table class="table-form" style="margin-bottom:10px;width:650px">
 <tr>
 <td>
-With selected: <input name="process_update" type="submit" value="Update"> <input name="process_delete" type="submit" value="Hapus" onClick="return confirm('Apakah Anda yakin akan menghapus semua foto yang dipilih?')"><br />
+With selected: <input name="process_update" type="submit" value="Update"> <input name="process_delete" type="submit" value="Delete" onClick="return confirm('Apakah Anda yakin akan menghapus semua foto yang dipilih?')"><br />
 </td>
 </tr>
 </table>
 <table class="table-common" width="650px">
 <tr>
 	<th>Check</th>
-	<th>Foto</th>
-	<th>Deskripsi</th>
-	<th width="250px">Aksi</th>
+	<th>Photo</th>
+	<th>Description</th>
+	<th width="250px">Action</th>
 </tr>
 {photo}
 <tr class="{alert}">
@@ -153,7 +153,7 @@ With selected: <input name="process_update" type="submit" value="Update"> <input
 <table class="table-form" style="margin-bottom:5px;width:650px">
 <tr>
 <td>
-With selected: <input name="process_update" type="submit" value="Update"> <input name="process_delete" type="submit" value="Hapus" onClick="return confirm('Apakah Anda yakin akan menghapus semua foto yang dipilih?')"><br />
+With selected: <input name="process_update" type="submit" value="Update"> <input name="process_delete" type="submit" value="Delete" onClick="return confirm('Are you sure you want to delete all selected photos?')"><br />
 </td>
 </tr>
 </table>
