@@ -2382,18 +2382,18 @@ class General extends Model {
 		if (trim($_POST['post_search'])!='') {
 			$search = $_POST['post_search'];
 			$post_search_string = " and (member_title like '%$search%' or member_profile like '%$search%' ) ";
-			$this->session->set_userdata('post_search_string',$post_search_string);
-			$this->session->set_userdata('post_search_key',$search);
+			$this->session->set_userdata('member_post_search_string',$post_search_string);
+			$this->session->set_userdata('member_post_search_key',$search);
 		}
 		if (!empty($_POST['post_search_submit']) & trim($_POST['post_search'])=='') {
-			$this->session->unset_userdata('post_search_string');
-			$this->session->unset_userdata('post_search_key');
+			$this->session->unset_userdata('member_post_search_string');
+			$this->session->unset_userdata('member_post_search_key');
 		}
 		
-		$sql = "select * FROM t_members where member_id >0  ". $this->session->userdata('post_search_string')." order by member_date_added desc";
+		$sql = "select * FROM t_members where member_id >0  ". $this->session->userdata('member_post_search_string')." order by member_date_added desc";
 		//echo $sql;
 		//die;
-		$query = $this->db->query("select count(member_id) as jum FROM t_members where member_id >0 ". $this->session->userdata('post_search_string')." order by member_date_added desc");
+		$query = $this->db->query("select count(member_id) as jum FROM t_members where member_id >0 ". $this->session->userdata('member_post_search_string')." order by member_date_added desc");
 		$row = $query->row_array(0);
 		$count = $row['jum'];
 		$data = $this->pagination_model->paging(config_item('index_page').'/cpm/members/',3, $sql, $count, 10, 2);
