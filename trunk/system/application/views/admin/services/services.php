@@ -31,7 +31,7 @@
 <div class="subcontent-navigation">
 <a href="{base_url}cpm">Home</a> &gt;
 <a href="{base_url}cpm/directory/services/">Services</a> &gt;  
-Item
+List Item
 </div>
 
 <h2>Services</h2>
@@ -44,7 +44,7 @@ Item
 	<td>:</td>
 	<td>
 	<input name="post_search" type="text" size="40">
-	<input name="post_search_submit" type="submit" value="Cari">
+	<input name="post_search_submit" type="submit" value="Search">
 	</td>
 </tr>
 </table>
