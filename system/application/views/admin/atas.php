@@ -21,10 +21,11 @@
 <a name="top"></a>
 	<!--Header-->
 	<div id="header">
-		<div id="header-image">
+		<div id="header-image" style="color:#cc9900; font-weight:bold; font-size:20px;">
+			 ADMINISTRATIONS PANEL    
 		</div>
 		<div id="header-filler">
-		<strong>Version 1.0.1</strong>
+		<strong></strong>
 		</div>
 	</div>
 
@@ -33,7 +34,7 @@
 		<div class="breadcrumb">
 		<ul>
 			<li class="home"><a href="<?php echo reduce_double_slashes(config_item('base_url').config_item('index_page')."/cpm/") ?>"><strong>Home</strong></a></li>
-			<li><a href="<?php echo reduce_double_slashes(config_item('base_url').config_item('index_page')) ?>" target="_blank"><strong>Lihat Website</strong></a></li>
+			<li><a href="<?php echo reduce_double_slashes(config_item('base_url').config_item('index_page')) ?>" target="_blank"><strong>View Website</strong></a></li>
 			<li><a href="<?php echo reduce_double_slashes(config_item('base_url').config_item('index_page')."/cpm/logout") ?>"><strong>Logout</strong></a></li>
 		</ul>
 		</div>
@@ -74,6 +75,7 @@
 
   <h3>Module</h3>
 	<ul>
+		<li><a href="<?php echo reduce_double_slashes(config_item('base_url').config_item('index_page')."/cpm/members/") ?>">Members</a></li>
 		<li><a href="<?php echo reduce_double_slashes(config_item('base_url').config_item('index_page')."/cpm/services/") ?>">Services</a></li>
 		<li><a href="<?php echo reduce_double_slashes(config_item('base_url').config_item('index_page')."/cpm/album/") ?>">Photo Galery</a></li>
 		<li><a href="<?php echo reduce_double_slashes(config_item('base_url').config_item('index_page')."/cpm/guestbook/") ?>">Guest Book</a></li>
