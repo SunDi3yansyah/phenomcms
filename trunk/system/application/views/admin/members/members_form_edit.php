@@ -79,7 +79,7 @@ Edit
 	<th width="100px">Date</th>
 	<th>:</th>
 	<td>
-	<input name="mrc_date" type="text" id="datepicker" value="{multiple record mrc_date}">
+	<input name="mrc_date" type="text" size="30" id="datepicker" value="{multiple record mrc_date}">
 	<input name="mrc_id" type="hidden" value="{multiple record mrc_id}">
 		</td>
 </tr>
