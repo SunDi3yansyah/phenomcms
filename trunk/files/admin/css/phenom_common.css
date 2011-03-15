@@ -50,7 +50,7 @@ html, body {
 	height: 52px;
 	float: left;
 	margin: 10px 0 10px 10px;
-	background-image: url('../images/header-left.png');
+	background-image: url('../images/header-left.png__');
 	background-repeat: no-repeat;
 }
 
