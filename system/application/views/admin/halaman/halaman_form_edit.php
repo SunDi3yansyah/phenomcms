@@ -188,7 +188,7 @@ Edit
 
 <tr>
 	<td colspan="3">
-	<input type="submit" value="Simpan">
+	<input type="submit" value="Save">
 	<input type="reset" value="Reset">
 	</td>
 </tr>

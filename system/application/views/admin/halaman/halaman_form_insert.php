@@ -75,7 +75,7 @@ Insert
 	<th width="100px">Status</th>
 	<th>:</th>
 	<td>
-	<input name="sr_visible" type="radio" value="1" checked> Tampilkan
+	<input name="sr_visible" type="radio" value="1" checked> Show
 	<input name="sr_visible" type="radio" value="0"> Hide
 	</td>
 </tr>
@@ -127,7 +127,7 @@ Insert
 
 <tr>
 	<td colspan="3">
-	<input type="submit" value="Tambahkan">
+	<input type="submit" value="Add">
 	<input type="reset" value="Reset">
 	</td>
 </tr>
