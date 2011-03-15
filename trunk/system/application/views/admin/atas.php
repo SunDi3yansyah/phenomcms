@@ -97,7 +97,7 @@ if ($this->session->userdata('username')=='admin') {
 }
 ?>
 
-            <small>Copyright &copy; 2010<br /> Powered by PhenomCMS 1.0.1</small>
+            <small>Copyright &copy; 2010<br /> Powered by thuongdd 1.0</small>
 				<br><br>
 			</div>
 		</div>
