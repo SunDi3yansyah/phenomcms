@@ -2373,6 +2373,317 @@ class General extends Model {
 		return;
 	}
  #-----------------------------------------End module services-----------------------------------------------------------------
+
+//--------------------------------------Services-----------------------------------------------------------------------------
+	
+	function get_members_list($user)
+	{
+		$this->load_db($user);
+		if (trim($_POST['post_search'])!='') {
+			$search = $_POST['post_search'];
+			$post_search_string = " and (member_title like '%$search%' or member_profile like '%$search%' ) ";
+			$this->session->set_userdata('post_search_string',$post_search_string);
+			$this->session->set_userdata('post_search_key',$search);
+		}
+		if (!empty($_POST['post_search_submit']) & trim($_POST['post_search'])=='') {
+			$this->session->unset_userdata('post_search_string');
+			$this->session->unset_userdata('post_search_key');
+		}
+		
+		$sql = "select * FROM t_members where member_id >0  ". $this->session->userdata('post_search_string')." order by member_date_added desc";
+		//echo $sql;
+		//die;
+		$query = $this->db->query("select count(member_id) as jum FROM t_members where member_id >0 ". $this->session->userdata('post_search_string')." order by member_date_added desc");
+		$row = $query->row_array(0);
+		$count = $row['jum'];
+		$data = $this->pagination_model->paging(config_item('index_page').'/cpm/members/',3, $sql, $count, 10, 2);
+		if (!empty($data['result'])) {
+		foreach ($data as $key=>$entry) {
+			foreach ($entry as $row=>$value) {
+				$data['multiple record last posted list index'][$row]['no'] = ($row + 1);
+
+				$x = explode(".",$value['member_image']);
+				$ext = $x[count($x)-1];
+				$y = explode(".".$ext,$value['member_image']);
+				$thumbnail_file = config_item('base_url')."/userfiles/image/members/".$y[0]."_thumb.".$ext;
+				$data['multiple record last posted list index'][$row]['mrc_image'] = $thumbnail_file;
+				$data['multiple record last posted list index'][$row]['mrc_email'] = $value['member_email'];
+				$data['multiple record last posted list index'][$row]['mrc_fullname'] = $value['member_firstname'].' '.$value['member_lastname'];
+				$data['multiple record last posted list index'][$row]['mrc_title'] = $value['member_title'];
+				$data['multiple record last posted list index'][$row]['mrc_company'] = $value['member_company'];
+				$data['multiple record last posted list index'][$row]['mrc_profile'] = $value['member_profile'];
+				$data['multiple record last posted list index'][$row]['posted_by'] = $value['member_by'];
+
+				// Ambil jumlah komentar
+				$query_comment = $this->db->query("select count(comment_id) as jum from t_comments where comment_posting_id='".$value['posting_id']."'");
+				$row_comment = $query_comment->row_array(0);
+				$comment_count = $row_comment['jum'];
+				if ($comment_count>0)
+				{
+					$comment_link = 
+					"<a href='".reduce_double_slashes(config_item('base_url').config_item('index_page').'/cpm/komentar_posting/'.$value['posting_id']."/")."'>
+					<img src='".config_item('base_url')."/files/admin/images/comment.gif'> &nbsp;".$comment_count." Comments</a>";
+				}
+				else
+				{
+					$comment_link = 
+					"<a href='#'>
+					<img src='".config_item('base_url')."/files/admin/images/comment.gif'> &nbsp;".$comment_count." Comments</a>";
+				}
+
+				$data['multiple record last posted list index'][$row]['url action'] = 
+				$comment_link.
+				"<a href='".reduce_double_slashes(config_item('base_url').config_item('index_page').'/cpm/members_form_edit/'.$value['member_id']."/")."'>
+				<img src='".config_item('base_url')."/files/admin/images/edit.gif'></a>
+				<a href='".reduce_double_slashes(config_item('base_url').config_item('index_page').'/cpm/members_delete/'.$value['member_id']."/")."' onClick=\"return confirm('Are you sure you want to delete this services?')\">
+				<img src='".config_item('base_url')."/files/admin/images/delete.gif'></a>";
+				
+				if ($value['posting_visible']=='0') $data['multiple record last posted list index'][$row]['alert'] = 'table-common-alert';
+				else $data['multiple record last posted list index'][$row]['alert'] = '';
+
+				$content = strip_tags(trim(substr($value['service_content'],0,200)));
+				$x = strpos(strrev($content)," ");
+			 	$length = strlen($content) - $x - 1;
+	 			$content = substr($content,0,$length);
+
+				$data['multiple record last posted list index'][$row]['mrc_content'] = $content.'...';
+
+				$data['page_nav'] = $this->pagination->create_links();
+			}
+			}
+		}
+		else {
+				$data['multiple record last posted list index'][0]['no'] = '...';
+				$data['multiple record last posted list index'][0]['url action'] = '...';
+				$data['multiple record last posted list index'][0]['mrc_fullname'] = '...';
+				$data['multiple record last posted list index'][0]['mrc_id '] = '';
+				$data['multiple record last posted list index'][0]['mrc_title'] = '';
+				$data['multiple record last posted list index'][0]['mrc_date'] = '';
+				$data['multiple record last posted list index'][0]['mrc_company'] ='...';
+				$data['multiple record last posted list index'][0]['mrc_profile'] ='...';
+				$data['multiple record last posted list index'][0]['posted_by'] ='';
+				$data['multiple record last posted list index'][0]['comment_count'] ='';
+				$data['multiple record last posted list index'][0]['index_comment_count'] = '';
+				$data['page_nav'] = $this->pagination->create_links();
+		}
+		$data['url insert'] = reduce_double_slashes(config_item('base_url').config_item('index_page').'/cpm/members_form_insert/');
+		return ($data);
+	}
+
+	function get_members_detail($user,$id)
+	{
+		$this->load_db($user);
+		$query = $this->db->query("select * FROM t_members where member_id = '$id'");
+		$result['mr'] = $query->result_array();
+		if (!empty($result['mr'])) {
+			$x = explode(".",$result['mr'][0]['member_image']);
+			$ext = $x[count($x)-1];
+			$y = explode(".".$ext,$result['mr'][0]['member_image']);
+			$thumbnail_file = config_item('base_url')."/userfiles/image/members/".$y[0]."_thumb.".$ext;
+			$data['mrc_image'] = $result['mr'][0]['member_image'];
+			$data['mrc_thumbnail'] = $thumbnail_file;
+			$data['multiple record mrc_id'] = $result['mr'][0]['member_id'];
+			$data['multiple record mrc_date'] = $result['mr'][0]['member_date_added'];
+			$data['multiple record mrc_firstname'] = $result['mr'][0]['member_firstname'];
+			$data['multiple record mrc_lastname'] = $result['mr'][0]['member_lastname'];
+			$data['multiple record mrc_title'] = $result['mr'][0]['member_title'];
+			$data['multiple record mrc_seo'] = $result['mr'][0]['member_seo'];
+			$data['multiple record mrc_company'] = $result['mr'][0]['member_company'];
+			$data['multiple record mrc_email'] = $result['mr'][0]['member_email'];
+			$data['multiple record mrc_telephone'] = $result['mr'][0]['member_telephone'];
+			$data['multiple record mrc_address'] = $result['mr'][0]['member_address'];
+			$data['multiple record mrc_website'] = $result['mr'][0]['member_website'];
+			$data['multiple_record_mrc_profile'] = $result['mr'][0]['member_profile'];
+			$data['multiple_record_mrc_thumbnail'] = $result['mr'][0]['member_image'];
+			$data['multiple_record_mrc_visible'] = $result['mr'][0]['member_visible'];
+			//echo "<pre>"; print_r($data); echo"</pre>";die;
+
+			return ($data);
+		}
+		else {$data['mrc_thumbnail'] = $thumbnail_file;
+			$data['multiple record mrc_id'] = '';
+			$data['multiple record mrc_date'] = '';
+			$data['multiple record mrc_firstname'] = '';
+			$data['multiple record mrc_lastname'] = '';
+			$data['multiple record mrc_title'] = '';
+			$data['multiple record mrc_seo'] = '';
+			$data['multiple record mrc_company'] = '';
+			$data['multiple record mrc_email'] = '';
+			$data['multiple record mrc_telephone'] = '';
+			$data['multiple record mrc_address'] = '';
+			$data['multiple record mrc_website'] = '';
+			$data['multiple_record_mrc_profile'] = '';
+			$data['multiple_record_mrc_thumbnail'] = '';
+			$data['multiple_record_mrc_visible'] = '';
+		}
+		return ($data);
+	}
+
+	function members_insert($user, $data)
+	{
+		$this->load_db($user);
+		//if (trim($data['mrc_title'])=='' | empty($data['mrc_id']) | trim($data['mrc_id']) == '') return;
+		if (trim($_FILES['mrc_thumbnail']['name'])=='') $image = '';
+		else $image = $_FILES['mrc_thumbnail']['name'];
+		$data_mr = array(
+							'member_firstname' => $data['mrc_firstname'],
+							'member_lastname' => $data['mrc_lastname'],
+							'member_seo' => $data['mrc_seo'],
+							'member_email' => $data['mrc_email'],
+							'member_telephone' => $data['mrc_telephone'],
+							'member_fax' => $data['mrc_telephone'],
+							'member_email' => $data['mrc_email'],
+							'member_website' => $data['mrc_website'],
+							'member_address' => $data['mrc_address'],
+							'member_title' => $data['mrc_title'],
+							'member_company' => $data['mrc_company'],
+							'member_profile' => $data['FCKeditor1'],						
+							'member_image' => $image,
+							'member_date_added' => $data['mrc_date'],
+							'member_visible' =>  $data['mrc_visible']							
+						);
+		echo "<pre>"; print_r($data_mr); echo"</pre>";	
+						
+		$query = $this->db->insert('t_members', $data_mr);
+		
+		//die;
+		if ($query) 
+		{
+			if (!empty($_FILES['mrc_thumbnail']['tmp_name'])) {
+				$filename = "./userfiles/image/members/".$image;
+				copy($_FILES['mrc_thumbnail']['tmp_name'], $filename);
+
+				$x = explode(".",$image);
+				$ext = $x[count($x)-1];
+				$y = explode(".".$ext,$image);
+				$thumbnail_file = "./userfiles/image/members/".$y[0]."_thumb.".$ext;
+				copy($_FILES['mrc_thumbnail']['tmp_name'], $thumbnail_file);
+
+				$config['image_library'] = 'gd2';
+				$config['source_image'] = $filename;
+				$config['maintain_ratio'] = TRUE;
+				$config['width'] = 200;
+				$config['height'] = 200;
+				$this->load->library('image_lib',$config);
+				$this->image_lib->initialize($config);
+				$this->image_lib->resize();
+				@chmod($filename, 0777);
+
+				$config['image_library'] = 'gd2';
+				$config['source_image'] = $thumbnail_file;
+				$config['maintain_ratio'] = TRUE;
+				$config['width'] = 100;
+				$config['height'] = 100;
+				$this->load->library('image_lib',$config);
+				$this->image_lib->initialize($config);
+				$this->image_lib->resize();
+				@chmod($thumbnail_file, 0777);
+			}
+			
+		}
+		return;
+	}
+
+	function members_edit($user, $data)
+	{
+		$this->load_db($user);
+
+		$query = $this->db->query("select member_image as image FROM t_members where member_id = '".$data['mrc_id']."'");
+		$row = $query->row_array(0);
+		$current_image = "./userfiles/image/members/".$row['image'];
+
+		$x = explode(".",$row['image']);
+		$ext = $x[count($x)-1];
+		$y = explode(".".$ext,$row['image']);
+		$current_thumbnail = "./userfiles/image/members/".$y[0]."_thumb.".$ext;
+
+		$id = $data['mrc_id'];
+		//if (trim($data['mrc_title'])=='' | empty($data['mrc_mr_id']) | trim($data['mrc_mr_id']) == '') return;
+		if (empty($data['mrc_id']) | trim($data['mrc_id']) == '') return;
+		if (trim($_FILES['mrc_thumbnail']['name'])=='') 
+			$image = $data['mrc_current_thumbnail'];
+		else 
+			$image = $_FILES['mrc_thumbnail']['name'];
+		$data_mr = array(
+							'member_firstname' => $data['mrc_firstname'],
+							'member_lastname' => $data['mrc_lastname'],
+							'member_seo' => $data['mrc_seo'],
+							'member_email' => $data['mrc_email'],
+							'member_telephone' => $data['mrc_telephone'],
+							'member_fax' => $data['mrc_telephone'],
+							'member_email' => $data['mrc_email'],
+							'member_website' => $data['mrc_website'],
+							'member_address' => $data['mrc_address'],
+							'member_title' => $data['mrc_title'],
+							'member_company' => $data['mrc_company'],
+							'member_profile' => $data['FCKeditor1'],						
+							'member_image' => $image,
+							'member_date_added' => $data['mrc_date'],
+							'member_visible' =>  $data['mrc_visible']							
+						);
+		//echo "<pre>"; print_r($data_mr); echo"</pre>";
+		//die();
+		$query = $this->db->update('t_members', $data_mr, array('member_id' => $id));
+		if ($query) 
+		{
+			if (!empty($_FILES['mrc_thumbnail']['tmp_name'])) {
+				if (file_exists($current_image)) {
+					@unlink($current_image);
+					@unlink($current_thumbnail);
+				}
+
+				$filename = "./userfiles/image/members/".$image;
+				copy($_FILES['mrc_thumbnail']['tmp_name'], $filename);
+
+				$x = explode(".",$image);
+				$ext = $x[count($x)-1];
+				$y = explode(".".$ext,$image);
+				$thumbnail_file = "./userfiles/image/members/".$y[0]."_thumb.".$ext;
+				copy($_FILES['mrc_thumbnail']['tmp_name'], $thumbnail_file);
+
+				$config['image_library'] = 'gd2';
+				$config['source_image'] = $filename;
+				$config['maintain_ratio'] = TRUE;
+				$config['width'] = 200;
+				$config['height'] = 200;
+				$this->load->library('image_lib',$config);
+				$this->image_lib->initialize($config);
+				$this->image_lib->resize();
+				@chmod($filename, 0777);
+
+				$config['image_library'] = 'gd2';
+				$config['source_image'] = $thumbnail_file;
+				$config['maintain_ratio'] = TRUE;
+				$config['width'] = 100;
+				$config['height'] = 100;
+				$this->load->library('image_lib',$config);
+				$this->image_lib->initialize($config);
+				$this->image_lib->resize();
+				@chmod($thumbnail_file, 0777);
+			}			
+		}
+		return ($query);
+	}
+
+	function members_delete($user, $id)
+	{
+		$this->load_db($user);
+		$query = $this->db->query("select member_image as image FROM t_members where member_id = '$id'");
+		$row = $query->row_array(0);
+			
+		$current_image = "./userfiles/image/members/".$row['image'];
+		$x = explode(".",$row['image']);
+		$ext = $x[count($x)-1];
+		$y = explode(".".$ext,$row['image']);
+		$current_thumbnail = "./userfiles/image/members/".$y[0]."_thumb.".$ext;
+		if (@file_exists($current_image)) {
+			@unlink($current_image);
+			@unlink($current_thumbnail);
+		}
+		$query = $this->db->delete('t_members', array('member_id' => $id)); 
+		return;
+	}
+ #-----------------------------------------End module services-----------------------------------------------------------------
  
  #-----------------------------------------Load function off all module-----------------------------------------------------------------
 
@@ -2457,6 +2768,7 @@ class General extends Model {
 		else $guestbook = array();
 		
 		//print_r($ctype);
+		//die;
 		if ($ctype=='services_list') 
 			$services_list = $this->get_services_list($user);
 		else 
@@ -2471,7 +2783,19 @@ class General extends Model {
 			$services_detil = $this->get_services_detil($user,$id);
 		else 
 			$services_detil = array();
-
+		
+		if ($ctype=='members_list') 
+			$members_list = $this->get_members_list($user);
+		else 
+			$members_list = array();
+	
+		if ($ctype=='members_edit') 
+			$members_detail = $this->get_members_detail($user,$id);
+		else 
+			$members_detail = array();
+		
+		
+		
 		if ($ctype=='polling_list') $polling_list = $this->polling_model->get_polling_list($user);
 		else $polling_list = array();
 
@@ -2512,7 +2836,9 @@ class General extends Model {
 									$themes,
 									$services_list,
 									$services_form_insert,
-									$services_detil
+									$services_detil,
+									$members_list,
+									$members_detail
 									);
 		return ($return_value);
 	}
