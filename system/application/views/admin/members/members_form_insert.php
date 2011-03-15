@@ -79,7 +79,7 @@ Insert
 	<th width="100px">Date</th>
 	<th>:</th>
 	<td>
-	<input name="mrc_date" type="text" id="datepicker" value="<?php echo date("Y-m-d H:i:s"); ?>">
+	<input name="mrc_date" type="text" size="30" id="datepicker" value="<?php echo date("Y-m-d H:i:s"); ?>">
 	</td>
 </tr>
 <tr>
